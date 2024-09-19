@@ -6,6 +6,6 @@ export const metadata = {title: 'Domov | ZoškaSnap'};
 
 export default function Home() {
   return (
-    <Typography>Domovská Stránka</Typography>
+    <Typography>Domovská Stránka aaaaaaa</Typography>
   );
 }
