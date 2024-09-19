@@ -2,7 +2,6 @@
 
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import { title } from 'process';
 
 export const metadata = {title: 'NotFound | ZoškaSnap'};
 
