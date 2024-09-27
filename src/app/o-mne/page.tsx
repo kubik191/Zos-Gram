@@ -7,10 +7,7 @@ export const metadata = {title: 'O mne | ZoškaSnap'};
 
 export default function AboutMe() {
   return (
-
-    <Container>
-      <Typography>Stránka o mne</Typography>
-    </Container>
+    <Container><Typography>Stránka o mne</Typography></Container>
   );
 }
 
