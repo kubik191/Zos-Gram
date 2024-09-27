@@ -9,3 +9,7 @@ export default function Home() {
     <Typography>Domovská Stránka aaaaaaa</Typography>
   );
 }
+
+
+
+
