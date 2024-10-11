@@ -3,7 +3,7 @@
 
 import type { Metadata } from "next";
 import "./globals.css";
-import SimpleBottomNavigation from "@/components/NavBar";
+import SimpleBottomNavigation from "../components/NavBar";
 
 export const metadata: Metadata = {
   title: "RobertWeb",
