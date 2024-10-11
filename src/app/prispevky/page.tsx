@@ -2,10 +2,19 @@
 
 import Typography from '@mui/material/Typography';
 
-export const metadata = {title: 'Zoznam príspevkov| ZoškaSnap'};
+export const metadata = { title: 'Detail prispevku | RobertWeb'};
 
-export default function PostList() {
+export default function PostDetail({ 
+  params,
+
+}: {
+  params: {
+    prispevokId : "string"
+  };
+}) {
   return (
-    <Typography>Tu su posty</Typography>
+
+      <Typography> Detail prispevku: {params.prispevokId}</Typography>
+
   );
 }
