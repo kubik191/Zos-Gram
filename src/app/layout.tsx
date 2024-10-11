@@ -6,7 +6,7 @@ import "./globals.css";
 import SimpleBottomNavigation from "../components/NavBar";
 
 export const metadata: Metadata = {
-  title: "RobertWeb",
+  title: "Zoska-web",
   description: "Created by Jakub",
 };
 
