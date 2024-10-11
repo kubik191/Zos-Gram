@@ -7,7 +7,7 @@ import SimpleBottomNavigation from "@/components/NavBar";
 
 export const metadata: Metadata = {
   title: "RobertWeb",
-  description: "Created by Robert",
+  description: "Created by Jakub",
 };
 
 export default function RootLayout({
