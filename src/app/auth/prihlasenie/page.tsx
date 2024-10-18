@@ -1,11 +1,13 @@
 // jakub-aplikacia-prax/src/app/auth/prihlasenie/page.tsx
 
-import Typography from '@mui/material/Typography';
 
-export const metadata = {title: 'Prihlásenie | ZoškaSnap'};
+import { signIn } from 'next-auth/react';
 
-export default function SignIn() {
+export default function SignInPage() {
   return (
-    <Typography>Tu sa prihlasujes</Typography>
+    <div>
+      <h1>Prihlásenie</h1>
+      <button onClick={() => signIn('google')}>Sign in with Google</button>
+    </div>
   );
 }

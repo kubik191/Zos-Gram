@@ -1,12 +1,19 @@
 // jakub-aplikacia-prax/src/app/(home)/page.tsx
 
-import Typography from '@mui/material/Typography';
 
-export const metadata = {title: 'Domov | ZoškaSnap'};
+import { useSession } from 'next-auth/react';
 
-export default function Home() {
+export default function HomePage() {
+  const { data: session } = useSession();
+
   return (
-    <Typography>Domovská Stránka aaaaaaa</Typography>
+    <div>
+      <h1>Welcome to Domov</h1>
+      {!session ? (
+        <p>You are not signed in. If you want to add posts, please sign up.</p>
+      ) : (
+        <p>Welcome, {session.user?.name}!</p>
+      )}
+    </div>
   );
 }
-

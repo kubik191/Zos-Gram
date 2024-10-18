@@ -1,11 +1,12 @@
 // jakub-aplikacia-prax/src/app/auth/registracia/page.tsx
 
-import Typography from '@mui/material/Typography';
+import { signIn } from 'next-auth/react';
 
-export const metadata = {title: 'Registrácia | ZoškaSnap'};
-
-export default function SignUp() {
+export default function SignUpPage() {
   return (
-    <Typography>Tu sa registrujes</Typography>
+    <div>
+      <h1>Registrácia</h1>
+      <button onClick={() => signIn('google')}>Sign up with Google</button>
+    </div>
   );
 }
