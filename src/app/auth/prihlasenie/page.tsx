@@ -1,5 +1,6 @@
 // jakub-aplikacia-prax/src/app/auth/prihlasenie/page.tsx
 
+"use client";
 
 import { signIn } from 'next-auth/react';
 
