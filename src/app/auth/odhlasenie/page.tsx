@@ -1,13 +1,30 @@
-// jakub-aplikacia-prax/src/app/auth/odhlasenie/page.tsx
+"use client"; // Keep this directive
 
-"use client";
-
+import Head from 'next/head';
 import Typography from '@mui/material/Typography';
-
-export const metadata = {title: 'Odhlásenie | ZoškaSnap'};
+import Button from '@mui/material/Button';
+import { signOut } from 'next-auth/react';
 
 export default function SignOut() {
   return (
-    <Typography>Tu sa odhlasujes</Typography>
+    <>
+      <Head>
+        <title>Odhlasenie | JakubGram</title>  {/* Set the title here */}
+      </Head>
+
+
+      <Typography variant="h4" gutterBottom>
+        Odhlásenie
+      </Typography>
+
+
+      <Button
+      variant="contained" 
+      color="primary" 
+      onClick={() => signOut()}
+      >
+        Sign Out
+      </Button>
+    </>
   );
 }
