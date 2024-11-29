@@ -1,23 +1,18 @@
-import { redirect } from 'next/navigation'
-import { getServerSession } from 'next-auth'
-import { authOptions } from '@/api/auth/[...nextauth]/authOptions'
+// layouts/PrivateLayout.tsx
+import React from 'react';
 
-export default async function PrivateLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
-  const session = await getServerSession(authOptions)
-
-  if (!session) {
-    redirect('/prihlasenie')
-  }
-
-  return (
-    <div className="min-h-screen flex flex-col">
-      <main className="flex-1">
-        {children}
-      </main>
-    </div>
-  )
+interface PrivateLayoutProps {
+  children: React.ReactNode;
 }
+
+const PrivateLayout: React.FC<PrivateLayoutProps> = ({ children }) => {
+  return (
+    <div>
+      <header>Private Header</header>
+      <main>{children}</main>
+    </div>
+  );
+};
+
+export default PrivateLayout;
+

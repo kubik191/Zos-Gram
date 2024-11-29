@@ -1,22 +1,17 @@
-import { Metadata } from "next"
+// layouts/PublicLayout.tsx
+import React from 'react';
 
-export const metadata: Metadata = {
-  title: 'Welcome',
-  description: 'Welcome to our platform',
+interface PublicLayoutProps {
+  children: React.ReactNode;
 }
 
-export default function PublicLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+const PublicLayout: React.FC<PublicLayoutProps> = ({ children }) => {
   return (
-    <div className="min-h-screen flex flex-col">
-      <main className="flex-1 flex items-center justify-center">
-        <div className="w-full max-w-md mx-auto p-6">
-          {children}
-        </div>
-      </main>
+    <div>
+      <header>Public Header</header>
+      <main>{children}</main>
     </div>
-  )
-}
+  );
+};
+
+export default PublicLayout;
