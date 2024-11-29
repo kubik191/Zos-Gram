@@ -27,7 +27,6 @@ export default function Navbar() {
   // Non-authenticated navigation paths
   const nonAuthPaths = [
     { label: "Domov", value: "/", icon: <HomeIcon /> },
-    { label: "Prispevky", value: "/prispevky", icon: <AddCircleIcon /> },
     { label: "Registrácia", value: "/auth/registracia", icon: <AppRegistrationIcon /> },
     { label: "Prihlásenie", value: "/auth/prihlasenie", icon: <LoginIcon /> }
   ];
