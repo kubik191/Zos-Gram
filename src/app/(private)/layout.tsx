@@ -1,18 +1,13 @@
-// layouts/PrivateLayout.tsx
-import React from 'react';
+import AuthGuard from "@/components/AuthGuard";
 
-interface PrivateLayoutProps {
+export default function PrivateLayout({
+  children,
+}: {
   children: React.ReactNode;
-}
-
-const PrivateLayout: React.FC<PrivateLayoutProps> = ({ children }) => {
+}) {
   return (
-    <div>
-      <header>Private Header</header>
-      <main>{children}</main>
-    </div>
+    <AuthGuard>
+        {children}
+    </AuthGuard>
   );
-};
-
-export default PrivateLayout;
-
+}

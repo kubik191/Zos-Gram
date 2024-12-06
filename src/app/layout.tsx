@@ -4,7 +4,6 @@ import { Metadata } from "next";
 import "./globals.css";
 import Navbar from "@/components/NavBar";
 import AuthProvider from "../components/AuthProvider";
-import { Inter } from 'next/font/google'
 import PublicLayout from './(public)/layout';
 import PrivateLayout from './(private)/layout';
 
@@ -13,7 +12,6 @@ export const metadata: Metadata = {
   description: "Created by Jakub Kucera",
 };
 
-const inter = Inter({ subsets: ['latin'] })
 
 export default function RootLayout({
   children,
