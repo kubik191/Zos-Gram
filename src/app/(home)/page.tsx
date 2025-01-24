@@ -4,18 +4,19 @@
 "use client";
 
 import { useSession } from 'next-auth/react';
+import { redirect } from 'next/navigation';
 
 export default function HomePage() {
   const { data: session } = useSession();
+  if ( session ) {
+    redirect('/prispevky')
+  }
 
   return (
     <div>
       <h1>Welcome to Domov</h1>
-      {!session ? (
-        <p>You are not signed in. If you want to add posts, please sign up.</p>
-      ) : (
-        <p>Welcome, {session.user?.name}!</p>
-      )}
+      <p>Please log in</p>
+      
     </div>
   );
 }

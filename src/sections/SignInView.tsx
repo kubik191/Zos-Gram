@@ -44,7 +44,7 @@ export default function SignInView() {
         </Typography>
         <Typography variant="body2" sx={{ mt: 2, mb: 3 }}>
           Nemáte účet?{' '}
-          <Link href="/registracia" passHref>
+          <Link href="/auth/registracia" passHref>
             <Typography
               component="span"
               sx={{
