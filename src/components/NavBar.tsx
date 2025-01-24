@@ -6,7 +6,6 @@ import {
   BottomNavigationAction, 
   Box, 
   Avatar,
-  PaletteMode,
   IconButton
 } from "@mui/material";
 import HomeIcon from "@mui/icons-material/Home";
@@ -14,7 +13,6 @@ import SearchIcon from "@mui/icons-material/Search";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import LoginIcon from "@mui/icons-material/Login";
 import AccessibilityIcon from '@mui/icons-material/Accessibility';
-import ArticleIcon from '@mui/icons-material/Article';
 import AppRegistrationIcon from "@mui/icons-material/AppRegistration";
 import LogoutIcon from "@mui/icons-material/Logout";
 import Brightness4Icon from '@mui/icons-material/Brightness4';
@@ -23,10 +21,7 @@ import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { useTheme } from '@/components/ThemeProvider';
 
-interface NavBarProps {
-  mode: PaletteMode;
-  setMode: (mode: PaletteMode) => void;
-}
+
 
 export default function Navbar() {
   const [value, setValue] = React.useState<string>("/");
