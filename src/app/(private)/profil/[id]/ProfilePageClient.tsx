@@ -29,20 +29,22 @@ interface Post {
   imageUrl: string;
   caption?: string | null;
   createdAt: Date;
-  likes: any[];
-  comments: any[];
 }
 
 interface Profile {
   id: string;
+  bio: string | null;
+  location: string | null;
+  avatarUrl: string | null;
+  interests: string[];
+}
+
+interface User {
+  id: string;
   name: string | null;
   email: string | null;
   image: string | null;
-  profile?: {
-    bio: string | null;
-    location: string | null;
-    website: string | null;
-  };
+  profile: Profile | null;
   posts: Post[];
   _count: {
     posts: number;
@@ -52,7 +54,7 @@ interface Profile {
 }
 
 interface Props {
-  profile: Profile;
+  profile: User;
 }
 
 export default function ProfilePageClient({ profile }: Props) {
@@ -115,11 +117,9 @@ export default function ProfilePageClient({ profile }: Props) {
                 {profile.profile.bio}
               </Typography>
             )}
-            {profile.profile?.website && (
+            {profile.profile?.location && (
               <Typography variant="body2" color="primary">
-                <a href={profile.profile.website} target="_blank" rel="noopener noreferrer">
-                  {profile.profile.website}
-                </a>
+                {profile.profile.location}
               </Typography>
             )}
           </Box>
@@ -164,15 +164,15 @@ export default function ProfilePageClient({ profile }: Props) {
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    gap: 2,
                     color: 'white',
                     '&:hover': {
                       opacity: 1
                     }
                   }}
                 >
-                  <Typography>❤️ {post.likes.length}</Typography>
-                  <Typography>💬 {post.comments.length}</Typography>
+                  <Typography variant="h6">
+                    {new Date(post.createdAt).toLocaleDateString()}
+                  </Typography>
                 </Box>
               </ImageListItem>
             ))}

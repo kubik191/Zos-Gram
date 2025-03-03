@@ -18,6 +18,7 @@
     "@mui/material": "^5.15.11",
     "@prisma/client": "^5.10.2",
     "@types/lodash": "^4.17.16",
+    "framer-motion": "^12.4.7",
     "lodash": "^4.17.21",
     "next": "^14.2.24",
     "next-auth": "^4.24.7",

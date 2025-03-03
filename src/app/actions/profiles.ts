@@ -28,121 +28,84 @@ export const fetchProfiles = async (searchTerm: string) => {
 // Fetch a single profile by user ID
 export const fetchProfileByUserId = async (userId: string) => {
   try {
-    const profile = await prisma.user.findUnique({
+    console.log('Fetching profile for user ID:', userId);
+
+    // Fetch user with profile and posts
+    const user = await prisma.user.findUnique({
       where: { id: userId },
       include: {
         profile: true,
         posts: {
           orderBy: {
             createdAt: 'desc'
-          },
-          include: {
-            likes: true,
-            comments: {
-              include: {
-                user: true
-              }
-            }
-          }
-        },
-        followers: {
-          include: {
-            follower: {
-              select: {
-                id: true,
-                name: true,
-                image: true
-              }
-            }
-          }
-        },
-        following: {
-          include: {
-            following: {
-              select: {
-                id: true,
-                name: true,
-                image: true
-              }
-            }
           }
         }
       }
     });
 
-    if (!profile) {
-      throw new Error('Profile not found');
+    if (!user) {
+      throw new Error('User not found');
     }
 
-    // Transform the data to include counts
-    const transformedProfile = {
-      ...profile,
+    // If profile doesn't exist, create it
+    if (!user.profile) {
+      await prisma.profile.create({
+        data: {
+          userId,
+          bio: null,
+          location: null,
+          interests: [],
+          avatarUrl: user.image || null
+        }
+      });
+
+      // Fetch the user again with the new profile
+      const updatedUser = await prisma.user.findUnique({
+        where: { id: userId },
+        include: {
+          profile: true,
+          posts: {
+            orderBy: {
+              createdAt: 'desc'
+            }
+          }
+        }
+      });
+
+      if (!updatedUser) {
+        throw new Error('User not found after profile creation');
+      }
+
+      return {
+        ...updatedUser,
+        _count: {
+          posts: updatedUser.posts.length,
+          followers: 0,
+          following: 0
+        }
+      };
+    }
+
+    // Return user with counts
+    return {
+      ...user,
       _count: {
-        posts: profile.posts.length,
-        followers: profile.followers.length,
-        following: profile.following.length
+        posts: user.posts.length,
+        followers: 0,
+        following: 0
       }
     };
-
-    return transformedProfile;
   } catch (error) {
-    console.error("Error fetching profile by userId:", error);
-    throw new Error("Could not fetch profile");
+    console.error("Error in fetchProfileByUserId:", error);
+    throw error;
   }
 };
 
+// Note: These functions won't work until you add the Follows model to your schema
 export const toggleFollow = async (followerId: string, followingId: string) => {
-  try {
-    // Check if already following
-    const existingFollow = await prisma.follows.findUnique({
-      where: {
-        followerId_followingId: {
-          followerId,
-          followingId
-        }
-      }
-    });
-
-    if (existingFollow) {
-      // Unfollow
-      await prisma.follows.delete({
-        where: {
-          followerId_followingId: {
-            followerId,
-            followingId
-          }
-        }
-      });
-      return false; // Not following anymore
-    } else {
-      // Follow
-      await prisma.follows.create({
-        data: {
-          followerId,
-          followingId
-        }
-      });
-      return true; // Now following
-    }
-  } catch (error) {
-    console.error("Error toggling follow:", error);
-    throw new Error("Could not toggle follow status");
-  }
+  throw new Error("Follow functionality not implemented yet");
 };
 
 export const checkIfFollowing = async (followerId: string, followingId: string) => {
-  try {
-    const follow = await prisma.follows.findUnique({
-      where: {
-        followerId_followingId: {
-          followerId,
-          followingId
-        }
-      }
-    });
-    return !!follow;
-  } catch (error) {
-    console.error("Error checking follow status:", error);
-    throw new Error("Could not check follow status");
-  }
+  return false;
 };
