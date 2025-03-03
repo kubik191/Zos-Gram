@@ -1,8 +1,11 @@
 // jakub-aplikacia-prax/src/app/hladanie/page.tsx
-import Typography from '@mui/material/Typography';
-export const metadata = {title: 'Hladanie | ZoškaSnap'};
-export default function Search() {
-  return (
-    <Typography>Tu vyhladavas</Typography>
-  );
+import { Metadata } from 'next';
+import SearchPageClient from './SearchPageClient';
+
+export const metadata: Metadata = {
+  title: 'Hľadanie | ZoškaSnap'
+};
+
+export default function SearchPage() {
+  return <SearchPageClient />;
 }

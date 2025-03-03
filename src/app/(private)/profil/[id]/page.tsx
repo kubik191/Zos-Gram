@@ -1,11 +1,33 @@
-// jakub-aplikacia-prax/src/app/profil/[id]/page.tsx
+import { Metadata } from 'next';
+import { fetchProfileByUserId } from '@/app/actions/profiles';
+import ProfilePageClient from './ProfilePageClient';
+import { notFound } from 'next/navigation';
 
-import Typography from '@mui/material/Typography';
-
-export const metadata = {title: 'Detail profilu | ZoškaSnap'};
-
-export default function ProfileDetail() {
-  return (
-    <Typography>Detaily o profile</Typography>
-  );
+interface Props {
+  params: {
+    id: string;
+  };
 }
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  try {
+    const profile = await fetchProfileByUserId(params.id);
+    return {
+      title: `${profile.name || 'Profile'} | ZoškaSnap`,
+      description: profile.profile?.bio || 'User profile on ZoškaSnap'
+    };
+  } catch (error) {
+    return {
+      title: 'Profile | ZoškaSnap'
+    };
+  }
+}
+
+export default async function ProfilePage({ params }: Props) {
+  try {
+    const profile = await fetchProfileByUserId(params.id);
+    return <ProfilePageClient profile={profile} />;
+  } catch (error) {
+    notFound();
+  }
+} 

@@ -1,11 +1,9 @@
 // jakub-aplikacia-prax/src/app/gdpr/page.tsx
 
-import Typography from '@mui/material/Typography';
+import GDPRView from "../../../sections/GDPRView";
 
-export const metadata = {title: 'GDPR | ZoškaSnap'};
+export const metadata = { title: "GPDR | INSTAGRAM " };
 
-export default function GDPR() {
-  return (
-    <Typography>GDPR</Typography>
-  );
+export default function GDPRPage() {
+  return <GDPRView />;
 }
