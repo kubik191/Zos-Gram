@@ -21,17 +21,14 @@ export default async function ProfilePage() {
   }
 
   try {
-    // First check if user exists
     const user = await prisma.user.findUnique({
       where: { id: session.user.id },
-      include: { profile: true }
+      include: { profile: true },
     });
 
-    console.log('Found user:', user); // Debug log
-
     if (!user) {
-      // If user doesn't exist, create them
-      const newUser = await prisma.user.create({
+      // Create new user with profile if doesn't exist
+      await prisma.user.create({
         data: {
           id: session.user.id,
           name: session.user.name,
@@ -41,19 +38,29 @@ export default async function ProfilePage() {
             create: {
               bio: null,
               location: null,
-              website: null
+              website: null,
+              interests: []
             }
           }
         },
-        include: { profile: true }
       });
-      console.log('Created new user:', newUser); // Debug log
+    } else if (!user.profile) {
+      // Create profile for existing user if doesn't exist
+      await prisma.profile.create({
+        data: {
+          userId: user.id,
+          bio: null,
+          location: null,
+          website: null,
+          interests: []
+        },
+      });
     }
 
     const profile = await fetchProfileByUserId(session.user.id);
     return <ProfilePageClient profile={profile} />;
   } catch (error) {
-    console.error('Detailed error:', error); // Debug log
-    redirect('/');
+    console.error('Error in ProfilePage:', error);
+    throw error;
   }
 } 

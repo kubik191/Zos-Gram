@@ -6,7 +6,8 @@ import {
   BottomNavigationAction, 
   Box, 
   Avatar,
-  IconButton
+  IconButton,
+  Divider
 } from "@mui/material";
 import HomeIcon from "@mui/icons-material/Home";
 import SearchIcon from "@mui/icons-material/Search";
@@ -18,10 +19,8 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
 import { useRouter } from "next/navigation";
-import { useSession } from "next-auth/react";
+import { useSession, signOut } from "next-auth/react";
 import { useTheme } from '@/components/ThemeProvider';
-
-
 
 export default function Navbar() {
   const [value, setValue] = React.useState<string>("/");
@@ -32,6 +31,19 @@ export default function Navbar() {
   const handleNavigation = (event: React.SyntheticEvent, newValue: string) => {
     console.log("Navigating to:", newValue);
     setValue(newValue);
+    
+    // Special handling for profile navigation
+    if (newValue === "/profil" && session?.user?.id) {
+      router.push(`/profil/${session.user.id}`);
+      return;
+    }
+
+    // Special handling for logout
+    if (newValue === "logout") {
+      signOut({ callbackUrl: "/" });
+      return;
+    }
+
     if (!session && newValue !== "/auth/registracia" && newValue !== "/auth/prihlasenie" && newValue !== "/" && newValue !== "/o-mne" && newValue !== "/gdpr") {
       router.push("/auth/registracia");
     } else {
@@ -52,28 +64,36 @@ export default function Navbar() {
     { label: "Pridať", value: "/pridat", icon: <AddCircleIcon /> },
     {
       label: "Profil",
-      value: "/profile",
+      value: "/profil",
       icon: session?.user?.image ? (
-        <Avatar alt={session?.user?.name || "User"} src={session?.user?.image || undefined} />
+        <Avatar 
+          alt={session?.user?.name || "User"} 
+          src={session?.user?.image || undefined}
+          sx={{ width: 24, height: 24 }}
+        />
       ) : (
-        <Avatar>{session?.user?.name?.charAt(0) || "U"}</Avatar>
+        <Avatar sx={{ width: 24, height: 24 }}>
+          {session?.user?.name?.charAt(0) || "U"}
+        </Avatar>
       ),
     },
-    { label: "Odhlásiť", value: "/auth/odhlasenie", icon: <LogoutIcon /> },
   ];
 
   const navigationPaths = status === "authenticated" ? authPaths : nonAuthPaths;
 
   return (
-    <Box sx={{ width: "100%", position: "fixed", bottom: 0 }}>
-      <IconButton 
-        sx={{ position: 'absolute', right: 16, top: -48 }}
-        onClick={toggleTheme}
-        color="inherit"
+    <Box sx={{ width: "100%", position: "fixed", bottom: 0, zIndex: 1000 }}>
+      <BottomNavigation 
+        showLabels 
+        value={value} 
+        onChange={handleNavigation}
+        sx={{ 
+          borderTop: 1, 
+          borderColor: 'divider',
+          bgcolor: 'background.paper',
+          position: 'relative'
+        }}
       >
-        {mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
-      </IconButton>
-      <BottomNavigation showLabels value={value} onChange={handleNavigation}>
         {navigationPaths.map((path) => (
           <BottomNavigationAction
             key={path.value}
@@ -82,6 +102,19 @@ export default function Navbar() {
             icon={path.icon}
           />
         ))}
+        <Divider orientation="vertical" flexItem sx={{ mx: 1 }} />
+        <IconButton 
+          onClick={toggleTheme}
+          color="inherit"
+          sx={{ 
+            position: 'absolute',
+            right: 8,
+            top: '50%',
+            transform: 'translateY(-50%)'
+          }}
+        >
+          {mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
+        </IconButton>
       </BottomNavigation>
     </Box>
   );
